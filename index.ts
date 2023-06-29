@@ -12,7 +12,7 @@ export const getMovie = async (movieName: string) => {
     }
 
     const info = {
-      title: res.data.Title,
+      Title: res.data.Title,
       YearOfRelease: res.data.Year,
       IMDBRating: res.data.imdbRating,
       RottenTomatoesRating: res.data.Ratings[1]?.Value,
@@ -24,6 +24,8 @@ export const getMovie = async (movieName: string) => {
 
     return info;
   } catch (error) {
+    console.log(error);
+
     throw new Error("Movie does not exist");
   }
 };
@@ -31,18 +33,21 @@ export const getMovie = async (movieName: string) => {
 require("yargs")
   .scriptName("mycli-movieName")
   .usage("$0 <cmd> [args]")
-  .command("get [movieName]", "Movie Information", (yargs: any) => {
-    yargs.positional("movieName", {
-      type: "string",
-      default: "Cambi",
-      describe: "View movie information to omdbapi",
-    });
-  }, function (argv: any) {
-    getMovie(argv.movieName)
-      .then((val) => console.log(val))
-      .catch((error) => console.error(error.message));
+  .command(
+    "get [movieName]",
+    "Movie Information",
+    (yargs: any) => {
+      yargs.positional("movieName", {
+        type: "string",
+        default: "Cambi",
+        describe: "View movie information to omdbapi",
+      });
+    },
+    function (argv: any) {
+      getMovie(argv.movieName)
+        .then((val) => console.log(val))
+        .catch((error) => console.error(error.message));
       // console.log('i', argv.movieName, 'information movie')
-  })
-  .help()
-  .argv;
-  
+    }
+  )
+  .help().argv;
