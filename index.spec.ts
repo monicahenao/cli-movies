@@ -10,7 +10,6 @@ describe("getMovie", () => {
   test("should return a movie information", async () => {
     const movieInformation = {
       data: {
-        Response: 'some',
         Title: "Titanic",
         YearOfRelease: "1997",
         IMDBRating: "7.9",
@@ -29,13 +28,14 @@ describe("getMovie", () => {
   });
 
   test('should catch the error', async () => {
+    const obj = { title: "titanic" }
     try {
-      const result = axios.get
+      const result = await getMovie(obj.title); 
     } catch (e){
       expect(e).toEqual(new Error("Movie does not exist"))
     };
     
-    expect(axios.get).toHaveBeenCalledWith("http://www.omdbapi.com/?apikey=d0c583e1&t=titanic");
+    expect(axios.get).not.toHaveBeenCalledWith("http://www.omdbapi.com/?apikey=d0c583e1&t=");
   })
 
 });

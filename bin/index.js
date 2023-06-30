@@ -19,11 +19,8 @@ const getMovie = (movieName) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const res = yield axios_1.default.get("http://www.omdbapi.com/?apikey=d0c583e1&t=" + movieName);
-        if (res.data.Response === "False") {
-            throw new Error("Movie not found");
-        }
         const info = {
-            title: res.data.Title,
+            Title: res.data.Title,
             YearOfRelease: res.data.Year,
             IMDBRating: res.data.imdbRating,
             RottenTomatoesRating: (_a = res.data.Ratings[1]) === null || _a === void 0 ? void 0 : _a.Value,
@@ -52,8 +49,6 @@ require("yargs")
     (0, exports.getMovie)(argv.movieName)
         .then((val) => console.log(val))
         .catch((error) => console.error(error.message));
-    // console.log('i', argv.movieName, 'information movie')
 })
-    .help()
-    .argv;
+    .help().argv;
 //# sourceMappingURL=index.js.map
